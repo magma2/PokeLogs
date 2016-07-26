@@ -1,5 +1,5 @@
 
-# PokeLogs WIP
+# :point_right: PokeLogs WIP
 ----
 Reads the Log files from 
 [https://github.com/NecronomiconCoding/NecroBot](https://github.com/NecronomiconCoding/NecroBot)
