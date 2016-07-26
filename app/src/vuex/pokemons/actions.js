@@ -21,22 +21,25 @@ export const parseLogFiles = ({dispatch}, path) => {
                 for (let line in lines) {
                     if (typeof lines[line] === 'string' && lines[line].includes('CatchSuccess')) {
                         //let name = lines[line].split('|');
-                        let pattern = /\[(.+)\].+\)(.+) Lvl: (\d+) CP: \((\d+)\/(\d+)\) IV: (\d+,\d+%)/gmi;
+                        //\[(.+)\].+\)(.+) Lvl: (\d+) CP: \((\d+)\/(\d+)\) IV: (\d+,\d+%)
+                        let pattern = /\[(.+)\] \(.+\) ?(?: |\| +)(\w+) \w+ ?(?:: |\s+)(\d+)\s?(?:CP: \(|\()(\d+)\/(\d+)(?:\)| CP\)) (?:IV: |\()(\d+(?:.|,)\d+)% ?(?:\| |perfect\) \| )\w+: ?(\d+(?:.|,)\d+)% \| (\d+)\w \w*\w \| \w* \w (\w+). \| ?(?:Candies: |Family Candies: )(\d+)/gmi;
                         var match = pattern.exec(lines[line]);
 
-                        var cp = parseInt(match[5])
-                        var  level = parseInt(match[3])
-                        pokemons.push({time: match[1], name: `${match[2]}` , level, cp, iv: match[6]})
+                        if (match) {
+                            var cp = parseInt(match[5])
+                            var level = parseInt(match[3])
+                            var name = match[2].trim()
+                            pokemons.push({time: Date.now(), name, level, cp, iv: match[6]})
+                        } else {
+                            console.log(match);
+                        }
                     }
                 }
-                console.log('resolved');
                 resolve(pokemons);
 
             })
         })
     }
-
-    /*Promise.all((logFiles.map => readSingleFile ())).then*/
 
     fs.readdir(path, function (err, files) {
         if (err) return;
@@ -44,23 +47,9 @@ export const parseLogFiles = ({dispatch}, path) => {
         Promise.all(files.map((o) => readSingleFile(path + '\\' + o))).then((o) => {
             console.log(o);
             dispatch(types.PARSE_LOG_FILE, o)
-
         }).catch((err) => {
-
         })
-
     });
-
-    /*
-     function readFiles(logFiles) {
-     Promise.all(logFiles.map((o) => readSingleFile(o))).then((o) => {
-     console.log(o);
-     dispatch(types.PARSE_LOG_FILE, o)
-
-     }).catch((err) => {
-
-     })
-     }*/
 }
 
 

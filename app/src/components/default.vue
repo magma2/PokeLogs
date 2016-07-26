@@ -106,8 +106,16 @@
                 path          : false,
                 options       : {
                     sortable   : ['time', 'cp','iv','level'],
-                    sortBy     : ['time'],
+                   // sortBy     : ['time'],
 
+                    orderBy: {
+                        column: 'time',
+                        ascending:false
+                    },
+
+                    templates:{
+                        name: `{name} <img src="assets/pokemons/{name}.png">`
+                    }
                 }
             }
         },
@@ -144,6 +152,10 @@
         },
 
         methods: {
+
+            getPokemon() {
+
+            },
             openDialog(reload = false) {
                 var logFiles = this.$electron.remote.dialog.showOpenDialog({properties: ['openFile', 'openDirectory']})
 
