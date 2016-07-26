@@ -36,14 +36,10 @@ export const parseLogFiles = ({dispatch}, path) => {
 
     /*Promise.all((logFiles.map => readSingleFile ())).then*/
 
-    fs.readdir(path[0], function(err, files) {
+    fs.readdir(path, function(err, files) {
         if (err) return;
-        /*files.forEach(function(f) {
 
-        logFiles.push(path[0] + f)
-        });*/
-
-        Promise.all(files.map((o) => readSingleFile(path[0] + '\\' + o))).then((o) => {
+        Promise.all(files.map((o) => readSingleFile(path + '\\' + o))).then((o) => {
             console.log(o);
             dispatch(types.PARSE_LOG_FILE, o)
 
