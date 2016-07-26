@@ -22,9 +22,9 @@ export const parseLogFiles = ({dispatch}, path) => {
                 for (let line in lines) {
                     if (typeof lines[line] === 'string' && lines[line].includes('CatchSuccess')) {
                         //let name = lines[line].split('|');
-                        let pattern = /\[(.+)\] .+\|(.+)Lvl (\d+)\s\((\d+)\/(\d+)/gmi;
+                        let pattern = /\[(.+)\].+\)(.+) Lvl: (\d+) CP: \((\d+)\/(\d+)\) IV: (\d+,\d+%)/gmi;
                         var match = pattern.exec(lines[line]);
-                        pokemons.push({time: match[1], name: match[2], level: match[3], cp: `${parseInt(match[5])}`})
+                        pokemons.push({time: match[1], name: match[2], level: match[3], cp: `${parseInt(match[5])}`, iv: match[6]})
                     }
                 }
                 console.log('resolved');
