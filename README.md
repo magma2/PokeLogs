@@ -1,4 +1,5 @@
 # :point_right: PokeLogs WIP
+## :loudspeaker:  Supports: Necrobot v0.1.6 :loudspeaker:
 ----
 Reads the Log files from 
 [https://github.com/NecronomiconCoding/NecroBot](https://github.com/NecronomiconCoding/NecroBot)
