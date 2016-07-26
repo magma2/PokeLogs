@@ -14,7 +14,6 @@ export const parseLogFiles = ({dispatch}, path) => {
     var logFiles = []
     const readSingleFile = (path) => {
 
-
         return new Promise((resolve, reject) => {
             fs.readFile(path, 'utf8', function (err, data) {
                 if (err) return reject(err);
@@ -24,7 +23,9 @@ export const parseLogFiles = ({dispatch}, path) => {
                         //let name = lines[line].split('|');
                         let pattern = /\[(.+)\].+\)(.+) Lvl: (\d+) CP: \((\d+)\/(\d+)\) IV: (\d+,\d+%)/gmi;
                         var match = pattern.exec(lines[line]);
-                        pokemons.push({time: match[1], name: match[2], level: match[3], cp: `${parseInt(match[5])}`, iv: match[6]})
+
+                        var cp = parseInt(match[5])
+                        pokemons.push({time: match[1], name: match[2], level: match[3], cp: cp, iv: match[6]})
                     }
                 }
                 console.log('resolved');
@@ -36,7 +37,7 @@ export const parseLogFiles = ({dispatch}, path) => {
 
     /*Promise.all((logFiles.map => readSingleFile ())).then*/
 
-    fs.readdir(path, function(err, files) {
+    fs.readdir(path, function (err, files) {
         if (err) return;
 
         Promise.all(files.map((o) => readSingleFile(path + '\\' + o))).then((o) => {
@@ -47,20 +48,18 @@ export const parseLogFiles = ({dispatch}, path) => {
 
         })
 
-
-
     });
 
-/*
-function readFiles(logFiles) {
-    Promise.all(logFiles.map((o) => readSingleFile(o))).then((o) => {
-        console.log(o);
-        dispatch(types.PARSE_LOG_FILE, o)
+    /*
+     function readFiles(logFiles) {
+     Promise.all(logFiles.map((o) => readSingleFile(o))).then((o) => {
+     console.log(o);
+     dispatch(types.PARSE_LOG_FILE, o)
 
-    }).catch((err) => {
+     }).catch((err) => {
 
-    })
-}*/
+     })
+     }*/
 }
 
 

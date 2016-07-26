@@ -107,12 +107,7 @@
                 options       : {
                     sortable   : ['time', 'cp','iv'],
                     sortBy     : ['time'],
-                    listColumns: {
-                        name: [{
-                            name: 'Dratini',
-                            text: 'Dratini'
-                        }]
-                    }
+
                 }
             }
         },
