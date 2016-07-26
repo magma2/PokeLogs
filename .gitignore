@@ -2,6 +2,7 @@
 app/dist/*
 !app/dist/imgs
 !app/dist/fonts
+builds/*
 node_modules
 npm-debug.log
 npm-debug.log.*
