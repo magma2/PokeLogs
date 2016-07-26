@@ -102,10 +102,10 @@
                 autoReloadTime: 0,
                 showModal     : false,
                 autoReload    : false,
-                columns       : ['time', 'name', 'cp','iv'],
+                columns       : ['time', 'name','level', 'cp','iv'],
                 path          : false,
                 options       : {
-                    sortable   : ['time', 'cp','iv'],
+                    sortable   : ['time', 'cp','iv','level'],
                     sortBy     : ['time'],
 
                 }

@@ -25,7 +25,8 @@ export const parseLogFiles = ({dispatch}, path) => {
                         var match = pattern.exec(lines[line]);
 
                         var cp = parseInt(match[5])
-                        pokemons.push({time: match[1], name: match[2], level: match[3], cp: cp, iv: match[6]})
+                        var  level = parseInt(match[3])
+                        pokemons.push({time: match[1], name: `${match[2]}` , level, cp, iv: match[6]})
                     }
                 }
                 console.log('resolved');
