@@ -22,14 +22,17 @@ export const parseLogFiles = ({dispatch}, path) => {
                     if (typeof lines[line] === 'string' && lines[line].includes('CatchSuccess')) {
                         //let name = lines[line].split('|');
                         //\[(.+)\].+\)(.+) Lvl: (\d+) CP: \((\d+)\/(\d+)\) IV: (\d+,\d+%)
-                        let pattern = /\[(.+)\] \(.+\) ?(?: |\| +)(\w+) \w+ ?(?:: |\s+)(\d+)\s?(?:CP: \(|\()(\d+)\/(\d+)(?:\)| CP\)) (?:IV: |\()(\d+(?:.|,)\d+)% ?(?:\| |perfect\) \| )\w+: ?(\d+(?:.|,)\d+)% \| (\d+)\w \w*\w \| \w* \w (\w+). \| ?(?:Candies: |Family Candies: )(\d+)/gmi;
+                        const pattern = /\[(.+)\] \(.+\) ?(?: |\| +)(\w+) \w+ ?(?:: |\s+)(\d+)\s?(?:CP: \(|\()(\d+)\/(\d+)(?:\)| CP\)) (?:IV: |\()(\d+(?:.|,)\d+)% ?(?:\| |perfect\) \| )\w+: ?(\d+(?:.|,)\d+)% \| (\d+)\w \w*\w \| \w* \w (\w+). \| ?(?:Candies: |Family Candies: )(\d+)/gmi;
                         var match = pattern.exec(lines[line]);
+                        const timePattern = /NecroBot-(\d+\-\d+\-\d+)/gmi;
 
+                        const pathTime = timePattern.exec(path)[1];
                         if (match) {
                             var cp = parseInt(match[5])
                             var level = parseInt(match[3])
                             var name = match[2].trim()
-                            pokemons.push({time: Date.now(), name, level, cp, iv: match[6]})
+                            var time = `${pathTime} - ${match[1]}`;
+                            pokemons.push({time, name, level, cp, iv: match[6]})
                         } else {
                             console.log(match);
                         }
@@ -45,7 +48,6 @@ export const parseLogFiles = ({dispatch}, path) => {
         if (err) return;
 
         Promise.all(files.map((o) => readSingleFile(path + '\\' + o))).then((o) => {
-            console.log(o);
             dispatch(types.PARSE_LOG_FILE, o)
         }).catch((err) => {
         })
