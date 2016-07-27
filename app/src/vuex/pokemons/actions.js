@@ -22,7 +22,12 @@ export const parseLogFiles = ({dispatch}, path) => {
                     if (typeof lines[line] === 'string' && lines[line].includes('CatchSuccess')) {
                         //let name = lines[line].split('|');
                         //\[(.+)\].+\)(.+) Lvl: (\d+) CP: \((\d+)\/(\d+)\) IV: (\d+,\d+%)
-                        const pattern = /\[(.+)\] \(.+\) ?(?: |\| +)(\w+) \w+ ?(?:: |\s+)(\d+)\s?(?:CP: \(|\()(\d+)\/(\d+)(?:\)| CP\)) (?:IV: |\()(\d+(?:.|,)\d+)% ?(?:\| |perfect\) \| )\w+: ?(\d+(?:.|,)\d+)% \| (\d+)\w \w*\w \| \w* \w (\w+). \| ?(?:Candies: |Family Candies: )(\d+)/gmi;
+
+
+
+                        //\[.+\]?(?: .+ |\|)(\w+).+(?:Lvl).+(\d+).(?:DP:|CP:|\(\d+\/)
+
+                        const pattern = /\[(.+)\] \((?:\w{12}\)|\w{12} \w+ \#\d+\))(?:(?: \| \(\w+\) )| \| | )(\w+) \w{3}(?: |\: )(\d+) (?:\(|CP\: \()(\d+)\/(\d+)(?: CP\)|\)) (?:IV\: |\()(\d+(?:\,|\.)\d+)\% (?:\w+\) |)\| \w+\: (\d+(?:\.|\,)\d+)\% \| (\d+)(?:m|\,\d+m) \w+ \| \w+ \w (\w+)(?: \(\d+ \w+\)\. \| |\. \| )(?:\w+ \w+|\w+)\: (\d+|(?:\{\d+\}))/gmi;
                         var match = pattern.exec(lines[line]);
                         const timePattern = /NecroBot-(\d+\-\d+\-\d+)/gmi;
 
